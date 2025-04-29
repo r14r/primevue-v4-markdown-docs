@@ -8,7 +8,7 @@ This repository contains a consolidated version of the PrimeVue v4 documentation
 *   Enable easier searching across the entire documentation.
 *   Serve as a potential data source for training Large Language Models (LLMs) on PrimeVue v4.
 
-**Disclaimer:** This is an **unofficial** resource generated through web scraping. While efforts were made to capture the main content accurately, there might be minor formatting inconsistencies or missing elements (like interactive examples or images). The content's accuracy depends on the official documentation at the time of scraping. For the most up-to-date and official information, always refer to the [Official PrimeVue Documentation](https://primevue.org/).
+**Disclaimer:** This is an **unofficial** resource generated through web scraping. While efforts were made to capture the main content accurately, there might be minor formatting inconsistencies or missing elements (like interactive examples or images). The content's accuracy depends on the official documentation at the time of scraping. For the most up-to-date and official information, always refer to the <a href="https://primevue.org/" target="_blank">Official PrimeVue Documentation</a>.
 
 ## Contents
 
