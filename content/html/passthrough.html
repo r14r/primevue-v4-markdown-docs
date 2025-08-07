@@ -1,0 +1,196 @@
+<div class="doc-main"><div class="doc-intro"><h1>Pass Through</h1><p>The Pass Through attributes is an API to access the internal DOM Structure of the components.</p></div><!--[--><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Introduction <!-- --></h2><div class="doc-section-description"><!--[--><p> In traditional 3rd party UI libraries, users are limited to the API provided by component author. This API commonly consists of props, events and slots. Whenever a requirement emerges for a new customization option in the API, the component author needs to develop and publish it with a new release. </p><p> Vision of PrimeTek is <i>Your components, not ours</i>. The pass through feature is a key element to implement this vision by exposing the component internals in order to apply arbitrary attributes and listeners to the DOM elements. The primary advantage of this approach is that it frees you from being restricted by the main component API. We recommend considering the pass-through feature whenever you need to tailor a component that lacks a built-in feature for your specific requirement. </p><p>Two videos are available at PrimeTV youtube channel, first one is an introduction and second one covers a unique case that is solved by the pass-through.</p><!--]--></div><!--]--><div class="video-container"><iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/videoseries?si=gBh1ow-f0JfGWPrv&amp;list=PLC9bp-OHi-Wk9fMhxOM1u6Si82i6AxqUM" width="560"></iframe></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Basic <!-- --></h2><div class="doc-section-description"><!--[--><p> Each component has a special <i>pt</i> property to define an object with keys corresponding to the available DOM elements. Each value can either be a string, an object or a function that returns a string or an object to define the arbitrary properties to apply to the element such as styling, aria, data-* or custom attributes. If the value is a string or a function that returns a string, it is considered as a class definition and added to the class attribute of the element. Every component documentation has a dedicated section to document the available section names exposed via PT. </p><p> Most common usage of <i>pt</i> is styling and customization. The <i>class</i> and <i>style</i> properties support the exact syntax of the corresponding <a href="https://vuejs.org/guide/essentials/class-and-style.html">Vue bindings</a> like arrays, objects and conditionals. Example below styles an unstyled Panel component with Tailwind CSS library. </p><!--]--></div><!--]--><div class="card"><div class="border border-primary rounded-xl p-4" data-p="toggleable" data-pc-name="panel" data-pc-section="root" pc0_9=""><div class="flex items-center justify-between text-primary font-bold" data-p="toggleable" data-pc-section="header" id="myPanelHeader" style="user-select:none;"><!--[--><span class="text-xl" data-pc-section="title" id="pv_id_0_9_header">Header</span><!--]--><div data-pc-section="headeractions"><!--[--><!--]--><!--[--><button aria-controls="pv_id_0_9_content" aria-expanded="true" aria-label="Header" data-p="icon-only rounded text" data-p-disabled="false" data-p-severity="secondary" data-pc-extend="button" data-pc-name="pctogglebutton" data-pc-section="root" id="pv_id_0_9_header" pc0_10="" type="button"><!--[--><!--[--><!--[--><svg aria-hidden="true" class="p-icon" fill="none" height="14" viewbox="0 0 14 14" width="14" xmlns="http://www.w3.org/2000/svg"><path d="M13.2222 7.77778H0.777778C0.571498 7.77778 0.373667 7.69584 0.227806 7.54998C0.0819442 7.40412 0 7.20629 0 7.00001C0 6.79373 0.0819442 6.5959 0.227806 6.45003C0.373667 6.30417 0.571498 6.22223 0.777778 6.22223H13.2222C13.4285 6.22223 13.6263 6.30417 13.7722 6.45003C13.9181 6.5959 14 6.79373 14 7.00001C14 7.20629 13.9181 7.40412 13.7722 7.54998C13.6263 7.69584 13.4285 7.77778 13.2222 7.77778Z" fill="currentColor"></path></svg><!--]--><!--]--><!-- --><!-- --><!--]--></button><!--]--></div></div><div aria-labelledby="pv_id_0_9_header" data-pc-section="contentcontainer" id="pv_id_0_9_content" role="region" style=""><div class="text-primary-700 dark:text-primary-200 mt-4" data-pc-section="content"><!--[--><p class="m-0"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p><!--]--></div><!-- --></div></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;Panel header="Header" toggleable
+    :pt="{
+        root: 'border border-primary rounded-xl p-4',
+        header: (options) =&gt; ({
+            id: 'myPanelHeader',
+            style: {
+                'user-select': 'none'
+            },
+            class: ['flex items-center justify-between text-primary font-bold']
+        }),
+        content: { class: 'text-primary-700 dark:text-primary-200 mt-4' },
+        title: 'text-xl',
+        toggler: () =&gt; 'bg-primary text-primary-contrast hover:text-primary hover:bg-primary-contrast'
+    }"&gt;
+    &lt;p class="m-0"&gt;
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    &lt;/p&gt;
+&lt;/Panel&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">Declarative <!-- --></h2><div class="doc-section-description"><!--[--><p> The declarative syntax provides an alternative to the programmatic syntax. The attributes that start with <i>pt</i> are interpreted differently by the component based on the format below. An IDE extension is also being planned to autocomplete the values for better developer experience in the future. </p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;ComponentTag pt:[passthrough_key]:[attribute]="value" /&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><p>Here is another example using both syntax alternatives for the same options.</p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;Panel
+    :pt="{
+        root: {
+            class: 'border-1 border-solid'
+        },
+        header: {
+            'data-test-id': 'testid',
+            class: 'bg-blue-500',
+            onClick: onHeaderClick
+        }
+    }"
+&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;Panel
+    pt:root:class="border border-solid"
+    pt:header:id="headerId"
+    pt:header:data-test-id="testId"
+    pt:header:class="bg-blue-500"
+    :pt:header:onClick="onHeaderClick"
+&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">PC Prefix <!-- --></h2><div class="doc-section-description"><!--[--><p> Section names prefixed with <i>pc</i> denote PrimeVue components, distinguishing them from standard DOM elements and indicating the necessity for a nested structure. For example, the "badge" section is identified as <i>pcBadge</i> because the button component incorporates the badge component internally. </p><!--]--></div><!--]--><div class="card flex justify-center"><button aria-label="Messages 2" class="p-button p-component p-button-secondary p-button-outlined !px-4 !py-3" data-p="outlined" data-p-disabled="false" data-p-severity="secondary" data-pc-name="button" data-pc-section="root" pc0_12="" type="button"><!--[--><!--[--><span class="p-button-icon p-button-icon-left pi pi-inbox !text-xl !text-violet-500 dark:!text-violet-400" data-p="left" data-pc-section="icon"></span><!--]--><span class="p-button-label !text-lg !text-violet-500 dark:!text-violet-400" data-p="" data-pc-section="label">Messages</span><span class="p-badge p-component p-badge-circle p-badge-secondary !bg-violet-500 dark:!bg-violet-400 !text-white dark:!text-black" data-p="circle secondary" data-pc-extend="badge" data-pc-name="pcbadge" data-pc-section="root" pc0_13=""><!--[-->2<!--]--></span><!--]--></button></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+ &lt;Button
+    type="button"
+    label="Messages"
+    icon="pi pi-inbox"
+    badge="2"
+    variant="outlined"
+    severity="secondary"
+    :pt="{
+        root: '!px-4 !py-3',
+        icon: '!text-xl !text-violet-500 dark:!text-violet-400',
+        label: '!text-lg !text-violet-500 dark:!text-violet-400',
+        pcBadge: {
+            root: '!bg-violet-500 dark:!bg-violet-400 !text-white dark:!text-black'
+        }
+    }"
+/&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Lifecycle <!-- --></h2><div class="doc-section-description"><!--[--><p> Lifecycle hooks of components are exposed as pass through using the <i>hooks</i> property so that callback functions can be registered. Available callbacks are <i>onBeforeCreate</i>, <i>onCreated</i>, <i>onBeforeUpdate</i>, <i>onUpdated</i>, <i>onBeforeMount</i>, <i>onMounted</i>, <i>onBeforeUnmount</i> and <i>onUnmounted</i>. Refer to the Vue.js documentation for detailed information about lifecycle hooks. </p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;Panel header="Header" :pt="panelPT"&gt;
+    Content
+&lt;/Panel&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Global <!-- --></h2><div class="doc-section-description"><!--[--><p> Defines the shared pass through properties per component type. For example, with the configuration below all panel headers have the <i>bg-primary</i> style class and all autocomplete components have a fixed width. These settings can be overridden by a particular component as components <i>pt</i> property has higher precedence over global <i>pt</i>. </p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { createApp } from "vue";
+import PrimeVue from "primevue/config";
+const app = createApp(App);
+
+app.use(PrimeVue, {
+    pt: {
+        panel: {
+            header: {
+                class: 'bg-primary text-primary-contrast'
+            }
+        },
+        autocomplete: {
+            input: {
+                root: 'w-64' // OR { class: 'w-64' }
+            }
+        }
+    }
+});
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Custom CSS <!-- --></h2><div class="doc-section-description"><!--[--><p> The <i>global</i> property has a <i>css</i> option to define custom css that belongs to a global <i>pt</i> configuration. Common use case of this feature is defining global styles and animations related to the pass through configuration. </p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { createApp } from "vue";
+import PrimeVue from "primevue/config";
+const app = createApp(App);
+
+app.use(PrimeVue, {
+    pt: {
+        global: {
+            css: `
+                .my-button {
+                    border-width: 2px;
+                }
+            `
+        },
+        button: {
+            root: 'my-button'
+        }
+    }
+});
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">UsePassThrough <!-- --></h2><div class="doc-section-description"><!--[--><p>An existing pass through configuration is customized with the <i>usePassThrough</i> utility. The first parameter is the object to customize, the second parameter is the customizations and the final parameter is the merge strategy.</p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { createApp } from "vue";
+import PrimeVue from "primevue/config";
+import { usePassThrough } from "primevue/passthrough";
+import BasePreset from "./basepreset";
+
+const app = createApp(App);
+
+const CustomPreset = usePassThrough(
+    BasePreset,
+    {
+        panel: {
+            title: {
+                class: ['leading-none font-light text-2xl']
+            }
+        }
+    },
+    {
+        mergeSections: true,
+        mergeProps: false
+    }
+);
+
+app.use(PrimeVue, { unstyled: true, pt: CustomPreset });
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><p> The <i>mergeSections</i> defines whether the sections from the main configuration gets added and the <i>mergeProps</i> controls whether to override or merge the defined props. Defaults are <i>true</i> for <i>mergeSections</i> and <i>false</i> for <i>mergeProps</i>. </p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+const CustomPreset = usePassThrough(
+    BasePreset,
+    {
+        panel: {
+            header: 'my_panel_header'
+        }
+    },
+    { mergeSections: true, mergeProps: false }
+);
+
+// Output:
+// panel.header.class =&gt; 'my_panel_header'
+// panel.title.class =&gt; Tailwind.panel.title.class
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+const CustomPreset = usePassThrough(
+    BasePreset,
+    {
+        panel: {
+            header: 'my_panel_header'
+        }
+    },
+    { mergeSections: true, mergeProps: true }
+);
+
+// Output:
+// panel.header.class =&gt; [Tailwind.panel.header.class, 'my_panel_header']
+// panel.title.class =&gt; Tailwind.panel.title.class
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+const CustomPreset = usePassThrough(
+    BasePreset,
+    {
+        panel: {
+            header: 'my_panel_header'
+        }
+    },
+    { mergeSections: false, mergeProps: true }
+);
+
+// Output:
+// panel.header.class =&gt; [Tailwind.panel.header.class, 'my_panel_header']
+// panel.title.class =&gt; undefined
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+const CustomPreset = usePassThrough(
+    BasePreset,
+    {
+        panel: {
+            header: 'my_panel_header'
+        }
+    },
+    { mergeSections: false, mergeProps: false }
+);
+
+// Output:
+// panel.header.class =&gt; 'my_panel_header'
+// panel.title.class =&gt; undefined
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></div><!--]--></section><!--]--></div>

@@ -1,0 +1,1 @@
+<InputNumber v-model="value" disabled prefix="%" />

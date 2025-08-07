@@ -1,0 +1,1 @@
+<Listbox v-model="selectedCity" :options="cities" filter optionLabel="name" class="w-full md:w-56" />

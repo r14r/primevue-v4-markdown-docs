@@ -1,0 +1,1 @@
+<Knob v-model="value" valueColor="SlateGray" rangeColor="MediumTurquoise" />

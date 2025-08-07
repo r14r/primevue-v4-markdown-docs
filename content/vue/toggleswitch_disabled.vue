@@ -1,0 +1,1 @@
+<ToggleSwitch v-model="checked" disabled />

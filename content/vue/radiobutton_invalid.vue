@@ -1,0 +1,1 @@
+<RadioButton v-model="value" value="1" :invalid="value === null" />

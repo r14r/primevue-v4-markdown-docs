@@ -1,0 +1,1 @@
+<Image src="/image.jpg" alt="Image" width="250" />

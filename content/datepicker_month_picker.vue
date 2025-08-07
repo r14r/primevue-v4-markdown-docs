@@ -1,0 +1,1 @@
+<DatePicker v-model="date" view="month" dateFormat="mm/yy" />

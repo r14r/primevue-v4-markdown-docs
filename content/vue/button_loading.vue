@@ -1,0 +1,1 @@
+<Button type="button" label="Search" icon="pi pi-search" :loading="loading" @click="load" />

@@ -1,0 +1,1 @@
+<SelectButton v-model="value" :options="options" optionLabel="name" multiple aria-labelledby="multiple" />

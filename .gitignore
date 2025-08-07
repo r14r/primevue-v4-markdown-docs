@@ -1,3 +1,9 @@
+.envrc
+.set_env.sh
+
+.venv
+CLONE
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

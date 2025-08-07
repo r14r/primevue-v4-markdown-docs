@@ -1,0 +1,2 @@
+<InputText v-tooltip.bottom="{ value: 'Enter your username', autoHide: false }" type="text" placeholder="autoHide: false" />
+<InputText v-tooltip.bottom="'Enter your username'" type="text" placeholder="autoHide: true" />

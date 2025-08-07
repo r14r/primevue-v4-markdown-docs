@@ -1,0 +1,41 @@
+<div class="doc-main"><div class="doc-intro"><h1>Card</h1><p>Card is a flexible container component.</p></div><!--[--><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Import <!-- --></h2><div class="doc-section-description"><!--[--><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import Card from 'primevue/card';
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Basic <!-- --></h2><div class="doc-section-description"><!--[--><p>A simple Card is created with a <i>title</i> property along with the content as children.</p><!--]--></div><!--]--><div class="mb-4 p-8"><div class="p-card p-component" data-pc-name="card" data-pc-section="root" pc0_9=""><!-- --><div class="p-card-body" data-pc-section="body"><div class="p-card-caption" data-pc-section="caption"><div class="p-card-title" data-pc-section="title"><!--[-->Simple Card<!--]--></div><!-- --></div><div class="p-card-content" data-pc-section="content"><!--[--><p class="m-0"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas! </p><!--]--></div><!-- --></div></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;Card&gt;
+    &lt;template #title&gt;Simple Card&lt;/template&gt;
+    &lt;template #content&gt;
+        &lt;p class="m-0"&gt;
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
+            quas!
+        &lt;/p&gt;
+    &lt;/template&gt;
+&lt;/Card&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Advanced <!-- --></h2><div class="doc-section-description"><!--[--><p>Card provides <i>header</i>, <i>title</i>, <i>subtitle</i>, <i>content</i> and <i>footer</i> as the named templates to place content.</p><!--]--></div><!--]--><div class="mb-4 p-8 flex items-center justify-center"><div class="p-card p-component" data-pc-name="card" data-pc-section="root" pc0_10="" style="width:25rem;overflow:hidden;"><div class="p-card-header" data-pc-section="header"><!--[--><img alt="user header" class="w-full" src="https://primefaces.org/cdn/primevue/images/card-vue.jpg"/><!--]--></div><div class="p-card-body" data-pc-section="body"><div class="p-card-caption" data-pc-section="caption"><div class="p-card-title" data-pc-section="title"><!--[-->Advanced Card<!--]--></div><div class="p-card-subtitle" data-pc-section="subtitle"><!--[-->Card subtitle<!--]--></div></div><div class="p-card-content" data-pc-section="content"><!--[--><p class="m-0"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas! </p><!--]--></div><div class="p-card-footer" data-pc-section="footer"><!--[--><div class="flex gap-4 mt-1"><button aria-label="Cancel" class="p-button p-component p-button-secondary p-button-outlined w-full" data-p="outlined" data-p-disabled="false" data-p-severity="secondary" data-pc-name="button" data-pc-section="root" pc0_11="" type="button"><!--[--><!--[--><!-- --><!--]--><span class="p-button-label" data-p="" data-pc-section="label">Cancel</span><!-- --><!--]--></button><button aria-label="Save" class="p-button p-component w-full" data-p="" data-p-disabled="false" data-pc-name="button" data-pc-section="root" pc0_12="" type="button"><!--[--><!--[--><!-- --><!--]--><span class="p-button-label" data-p="" data-pc-section="label">Save</span><!-- --><!--]--></button></div><!--]--></div></div></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;Card style="width: 25rem; overflow: hidden"&gt;
+    &lt;template #header&gt;
+        &lt;img alt="user header" src="/images/usercard.png" /&gt;
+    &lt;/template&gt;
+    &lt;template #title&gt;Advanced Card&lt;/template&gt;
+    &lt;template #subtitle&gt;Card subtitle&lt;/template&gt;
+    &lt;template #content&gt;
+        &lt;p class="m-0"&gt;
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
+            quas!
+        &lt;/p&gt;
+    &lt;/template&gt;
+    &lt;template #footer&gt;
+        &lt;div class="flex gap-4 mt-1"&gt;
+            &lt;Button label="Cancel" severity="secondary" variant="outlined" class="w-full" /&gt;
+            &lt;Button label="Save" class="w-full" /&gt;
+        &lt;/div&gt;
+    &lt;/template&gt;
+&lt;/Card&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">Accessibility <!-- --></h2><div class="doc-section-description"><!--[--><h3>Screen Reader</h3><p> A card can be utilized in many use cases as a result no role is enforced, in fact a role may not be necessary if the card is used for presentational purposes only. Any valid attribute is passed to the container element so if you require to use one of the <a alt="Landmark Roles" href="https://www.w3.org/TR/wai-aria/#landmark">landmark</a> roles like <i>region</i>, you may use the <i>role</i> property. </p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;Card role="region"&gt;
+    Content
+&lt;/Card&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><h3>Keyboard Support</h3><p>Component does not include any interactive elements.</p><!--]--></div><!--]--></section><!--]--></div>

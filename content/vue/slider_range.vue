@@ -1,0 +1,1 @@
+<Slider v-model="value" range class="w-56" />

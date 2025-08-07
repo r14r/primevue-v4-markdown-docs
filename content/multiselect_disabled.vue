@@ -1,0 +1,1 @@
+<MultiSelect disabled placeholder="Select Cities" class="w-full md:w-80" />

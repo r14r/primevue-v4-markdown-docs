@@ -1,0 +1,1 @@
+<MeterGroup :value="value" labelPosition="start" labelOrientation="vertical" />

@@ -1,0 +1,36 @@
+<div class="doc-main"><div class="doc-intro"><h1>Install PrimeVue with Laravel</h1><p>Setting up PrimeVue in a Laravel project.</p></div><!--[--><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Download <!-- --></h2><div class="doc-section-description"><!--[--><p>PrimeVue is available for download on <a href="https://www.npmjs.com/package/primevue">npm registry</a>.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+# Using npm
+npm install primevue @primeuix/themes
+
+# Using yarn
+yarn add primevue @primeuix/themes
+
+# Using pnpm
+pnpm add primevue @primeuix/themes
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Plugin <!-- --></h2><div class="doc-section-description"><!--[--><p>PrimeVue plugin is required to be installed as an application plugin to set up the default <a class="" href="https://primevue.org/configuration">configuration</a>. The plugin is lightweight, and only utilized for configuration purposes.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { createApp } from 'vue';
+import PrimeVue from 'primevue/config';
+
+const app = createApp(App);
+app.use(PrimeVue);
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">Theme <!-- --></h2><div class="doc-section-description"><!--[--><p>Configure PrimeVue to use a theme like Aura.</p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { createApp } from 'vue';
+import PrimeVue from 'primevue/config';
+import Aura from '@primeuix/themes/aura';
+
+const app = createApp(App);
+app.use(PrimeVue, {
+    theme: {
+        preset: Aura
+    }
+});
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Verify <!-- --></h2><div class="doc-section-description"><!--[--><p> Verify your setup by adding a component such as <a class="" href="https://primevue.org/button">Button</a>. Each component can be imported and registered individually so that you only include what you use for bundle optimization. Import path is available in the documentation of the corresponding component. </p><!--]--></div><!--]--><div class="card flex justify-center"><button aria-label="Verify" class="p-button p-component" data-p="" data-p-disabled="false" data-pc-name="button" data-pc-section="root" pc0_9="" type="button"><!--[--><!--[--><!-- --><!--]--><span class="p-button-label" data-p="" data-pc-section="label">Verify</span><!-- --><!--]--></button></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import Button from "primevue/button"
+
+const app = createApp(App);
+app.component('Button', Button);
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">Examples <!-- --></h2><div class="doc-section-description"><!--[--><p class="mb-0"> We've created various samples for the popular options in the Vue ecosystem. Visit the <a href="https://github.com/primefaces/primevue-examples">primevue-examples</a> repository for more samples including <a href="https://github.com/primefaces/primevue-examples/tree/main/laravel-quickstart" rel="noopener noreferrer" target="_blank">laravel-quickstart</a> and <a href="https://github.com/primefaces/primevue-examples/tree/main/inertia-quickstart" rel="noopener noreferrer" target="_blank">inertia-quickstart</a>. </p><!--]--></div><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">Next Steps <!-- --></h2><div class="doc-section-description"><!--[--><p>Welcome to the Prime UI Ecosystem! Once you have PrimeVue up and running, we recommend exploring the following resources to gain a deeper understanding of the library.</p><ul class="leading-relaxed"><li><a class="doc-link" href="https://primevue.org/configuration">Global configuration</a></li><li><a class="doc-link" href="https://primevue.org/autoimport">Auto imports with tree-shaking</a></li><li><a class="doc-link" href="https://primevue.org/theming/styled">Customization of styles</a></li><li><a class="doc-link" href="https://primevue.org/passthrough">Pass through attributes</a></li><li><a class="doc-link" href="https://primevue.org/support">Getting support</a></li></ul><!--]--></div><!--]--></section><!--]--></div>

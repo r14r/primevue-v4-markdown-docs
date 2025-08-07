@@ -1,0 +1,1 @@
+<InputText v-model="value" disabled placeholder="Disabled" />

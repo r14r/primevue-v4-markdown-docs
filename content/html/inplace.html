@@ -1,0 +1,54 @@
+<div class="doc-main"><div class="doc-intro"><h1>Inplace</h1><p>Inplace provides an easy to do editing and display at the same time where clicking the output displays the actual content.</p></div><!--[--><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Import <!-- --></h2><div class="doc-section-description"><!--[--><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import Inplace from 'primevue/inplace';
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Basic <!-- --></h2><div class="doc-section-description"><!--[--><p><i>Inplace</i> component requires <i>display</i> and <i>content</i> templates to define the content of each state.</p><!--]--></div><!--]--><div class="card"><div aria-live="polite" class="p-inplace p-component" data-pc-name="inplace" data-pc-section="root" pc0_9=""><div class="p-inplace-display" data-p-disabled="false" data-pc-section="display" role="button" tabindex="0"><!--[--> View Content <!--]--></div></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;Inplace&gt;
+    &lt;template #display&gt; View Content &lt;/template&gt;
+    &lt;template #content&gt;
+        &lt;p class="m-0"&gt;
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        &lt;/p&gt;
+    &lt;/template&gt;
+&lt;/Inplace&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Input <!-- --></h2><div class="doc-section-description"><!--[--><p>The <i>closeCallback</i> switches the state back to display mode when called from an event.</p><!--]--></div><!--]--><div class="card"><div aria-live="polite" class="p-inplace p-component" data-pc-name="inplace" data-pc-section="root" pc0_10=""><div class="p-inplace-display" data-p-disabled="false" data-pc-section="display" role="button" tabindex="0"><!--[-->Click to Edit<!--]--></div></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;Inplace&gt;
+    &lt;template #display&gt;
+        {{ text || 'Click to Edit' }}
+    &lt;/template&gt;
+    &lt;template #content="{ closeCallback }"&gt;
+        &lt;span class="inline-flex items-center gap-2"&gt;
+            &lt;InputText v-model="text" autofocus /&gt;
+            &lt;Button icon="pi pi-times" text severity="danger" @click="closeCallback" /&gt;
+        &lt;/span&gt;
+    &lt;/template&gt;
+&lt;/Inplace&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Image <!-- --></h2><div class="doc-section-description"><!--[--><p>Any content such as an image can be placed inside an Inplace.</p><!--]--></div><!--]--><div class="card"><div aria-live="polite" class="p-inplace p-component" data-pc-name="inplace" data-pc-section="root" pc0_11=""><div class="p-inplace-display" data-p-disabled="false" data-pc-section="display" role="button" tabindex="0"><!--[--><span class="inline-flex items-center gap-2"><span class="pi pi-image"></span><span>View Photo</span></span><!--]--></div></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;Inplace&gt;
+    &lt;template #display&gt;
+        &lt;span class="inline-flex items-center gap-2"&gt;
+            &lt;span class="pi pi-image"&gt;&lt;/span&gt;
+            &lt;span&gt;View Photo&lt;/span&gt;
+        &lt;/span&gt;
+    &lt;/template&gt;
+    &lt;template #content&gt;
+        &lt;img class="w-full sm:w-80 shadow-md" alt="Nature" src="https://primefaces.org/cdn/primevue/images/nature/nature8.jpg" /&gt;
+    &lt;/template&gt;
+&lt;/Inplace&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Lazy <!-- --></h2><div class="doc-section-description"><!--[--><p>The <i>open</i> event is used to initialize the content such as loading data in a lazy manner.</p><!--]--></div><!--]--><div class="card"><div aria-live="polite" class="p-inplace p-component" data-pc-name="inplace" data-pc-section="root" pc0_12=""><div class="p-inplace-display" data-p-disabled="false" data-pc-section="display" role="button" tabindex="0"><!--[--> View Data <!--]--></div></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;Inplace @open="loadData"&gt;
+    &lt;template #display&gt; View Data &lt;/template&gt;
+    &lt;template #content&gt;
+        &lt;DataTable :value="products"&gt;
+            &lt;Column field="code" header="Code"&gt;&lt;/Column&gt;
+            &lt;Column field="name" header="Name"&gt;&lt;/Column&gt;
+            &lt;Column field="category" header="Category"&gt;&lt;/Column&gt;
+            &lt;Column field="quantity" header="Quantity"&gt;&lt;/Column&gt;
+        &lt;/DataTable&gt;
+    &lt;/template&gt;
+&lt;/Inplace&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">Accessibility <!-- --></h2><div class="doc-section-description"><!--[--><h3>Screen Reader</h3><p>Inplace component defines <i>aria-live</i> as "polite" by default, since any valid attribute is passed to the main container aria roles and attributes of the root element can be customized easily.</p><h3>View Mode Keyboard Support</h3><div class="doc-tablewrapper"><table class="doc-table"><thead><tr><th>Key</th><th>Function</th></tr></thead><tbody><tr><td><i>enter</i></td><td>Switches to content.</td></tr></tbody></table></div><!--]--></div><!--]--></section><!--]--></div>

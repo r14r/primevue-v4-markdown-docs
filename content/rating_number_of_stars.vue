@@ -1,0 +1,1 @@
+<Rating v-model="value" :stars="10" />

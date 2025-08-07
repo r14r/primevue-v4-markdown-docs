@@ -1,0 +1,1 @@
+<Knob v-model="value" disabled />

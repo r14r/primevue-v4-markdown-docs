@@ -1,0 +1,1 @@
+import Inplace from 'primevue/inplace';

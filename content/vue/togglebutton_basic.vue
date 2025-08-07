@@ -1,0 +1,1 @@
+<ToggleButton v-model="checked" onLabel="On" offLabel="Off" />

@@ -1,0 +1,1 @@
+<DatePicker v-model="date" dateFormat="dd/mm/yy" />

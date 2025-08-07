@@ -1,0 +1,10 @@
+- apps
+  - showcase                // website
+- packages
+  - auto-import-resolver    // unplugin resolver
+  - core                    // core api
+  - icons                   // primeicons as sfc
+  - metadata                // list of components and directives
+  - nuxt-module             // module for nuxt    
+  - primevue                // main package of components and directives
+  - themes                  // presets of styled mode

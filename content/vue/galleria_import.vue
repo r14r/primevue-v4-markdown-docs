@@ -1,0 +1,1 @@
+import Galleria from 'primevue/galleria';

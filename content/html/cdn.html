@@ -1,0 +1,82 @@
+<div class="doc-main"><div class="doc-intro"><h1>Install PrimeVue with CND</h1><p>Setting up PrimeVue in a project using CDN.</p></div><!--[--><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Script <!-- --></h2><div class="doc-section-description"><!--[--><p> You can use PrimeVue and Vue.js from a CDN with a script tag. This approach does not involve any build step, and is suitable for enhancing static HTML. This guide uses <a href="https://www.unpkg.com/" rel="noopener noreferrer">unpkg</a> however other providers such as <a href="https://www.jsdelivr.com" rel="noopener noreferrer" target="_blank">jsdeliver</a> and <a href="https://cdnjs.com" rel="noopener noreferrer" target="_blank">cdnjs</a> can also be used. </p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+https://unpkg.com/vue@3/dist/vue.global.js
+https://unpkg.com/primevue/umd/primevue.min.js
+https://unpkg.com/@primeuix/themes/umd/aura.js  // see theming for alternatives
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">CreateApp <!-- --></h2><div class="doc-section-description"><!--[--><p>Create an app container element and setup the application using <i>createApp</i>.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;body&gt;
+    &lt;script src="https://unpkg.com/vue@3/dist/vue.global.js"&gt;&lt;/script&gt;
+
+    &lt;div id="app"&gt;
+    &lt;/div&gt;
+
+    &lt;script&gt;
+        const { createApp, ref } = Vue;
+
+        const app = createApp({
+            setup() {
+
+            }
+        });
+
+        app.mount('#app');
+    &lt;/script&gt;
+&lt;/body&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Plugin <!-- --></h2><div class="doc-section-description"><!--[--><p>PrimeVue plugin is required to be installed as an application plugin to set up the default <a class="" href="https://primevue.org/configuration">configuration</a>.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+app.use(PrimeVue.Config);
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Theming <!-- --></h2><div class="doc-section-description"><!--[--><p>Include the theme preset via a script element after adding PrimeVue, valid options are Aura, Lara, Nora and Material.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;!-- &lt;script src="https://unpkg.com/@primeuix/themes/umd/{preset}.js"&gt;&lt;/script&gt; --&gt;
+
+&lt;script src="https://unpkg.com/@primeuix/themes/umd/aura.js"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/@primeuix/themes/umd/lara.js"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/@primeuix/themes/umd/nora.js"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/@primeuix/themes/umd/material.js"&gt;&lt;/script&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Example <!-- --></h2><div class="doc-section-description"><!--[--><p>A complete example using a PrimeVue DatePicker. You can also view this sample live at <a href="https://stackblitz.com/edit/web-platform-jt1jz4?file=index.html" rel="noopener noreferrer" target="_blank">Stackblitz</a>.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;title&gt;PrimeVue + CDN&lt;/title&gt;
+        &lt;meta charset="UTF-8" /&gt;
+        &lt;meta name="viewport" content="width=device-width" /&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;script src="https://unpkg.com/vue@3/dist/vue.global.js"&gt;&lt;/script&gt;
+        &lt;script src="https://unpkg.com/primevue/umd/primevue.min.js"&gt;&lt;/script&gt;
+        &lt;script src="https://unpkg.com/@primeuix/themes/umd/aura.js"&gt;&lt;/script&gt;
+
+        &lt;div id="app"&gt;
+            &lt;p-datepicker v-model="date"&gt;&lt;/p-datepicker&gt;
+            &lt;br /&gt;&lt;br /&gt;
+            {{ date }}
+        &lt;/div&gt;
+
+        &lt;script&gt;
+            const { createApp, ref } = Vue;
+
+            const app = createApp({
+                setup() {
+                const date = ref();
+
+                return {
+                    date
+                };
+                },
+            });
+
+            app.use(PrimeVue.Config, {
+                theme: {
+                    preset: PrimeUIX.Themes.Aura
+                }
+            });
+
+            app.component('p-datepicker', PrimeVue.DatePicker);
+
+            app.mount('#app');
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><!--]--></div>

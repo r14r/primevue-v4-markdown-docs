@@ -1,0 +1,1 @@
+<ProgressSpinner aria-label="Loading" />

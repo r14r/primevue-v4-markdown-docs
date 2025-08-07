@@ -1,0 +1,1 @@
+<div v-ripple class="ripple-box">Default</div>

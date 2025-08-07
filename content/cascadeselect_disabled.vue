@@ -1,0 +1,1 @@
+<CascadeSelect disabled placeholder="Disabled" class="w-56" />

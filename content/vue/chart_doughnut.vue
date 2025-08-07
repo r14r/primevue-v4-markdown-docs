@@ -1,0 +1,1 @@
+<Chart type="doughnut" :data="chartData" :options="chartOptions" class="w-full md:w-[30rem]" />

@@ -1,0 +1,1 @@
+<ProgressBar :value="40"> {{ value }}/100 </ProgressBar>

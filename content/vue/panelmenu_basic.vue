@@ -1,0 +1,1 @@
+<PanelMenu :model="items" />

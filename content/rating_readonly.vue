@@ -1,0 +1,1 @@
+<Rating v-model="value" readonly />

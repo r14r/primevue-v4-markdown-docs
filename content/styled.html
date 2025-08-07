@@ -1,0 +1,507 @@
+<div class="doc-main"><div class="doc-intro"><h1>Styled Mode</h1><p>Choose from a variety of pre-styled themes or develop your own.</p></div><!--[--><section class="py-6"><!--[--><h2 class="doc-section-label">Architecture <!-- --></h2><div class="doc-section-description"><!--[--><p> PrimeVue is a design agnostic library so unlike some other UI libraries it does not enforce a certain styling such as material design. Styling is decoupled from the components using the themes instead. A theme consists of two parts; <i>base</i> and <i>preset</i>. The base is the style rules with CSS variables as placeholders whereas the preset is a set of design tokens to feed a base by mapping the tokens to CSS variables. A base may be configured with different presets, currently Aura, Material, Lara and Nora are the available built-in options. </p><img alt="Architecture" class="w-full mb-4" src="https://primefaces.org/cdn/primevue/images/primevue-v4-styled-architecture.png"/><p>The core of the styled mode architecture is based on a concept named <i>design token</i>, a preset defines the token configuration in 3 tiers; <i>primitive</i>, <i>semantic</i> and <i>component</i>.</p><h3>Primitive Tokens</h3><p> Primitive tokens have no context, a color palette is a good example for a primitive token such as <i>blue-50</i> to <i>blue-900</i>. A token named <i>blue-500</i> may be used as the primary color, the background of a message however on its own, the name of the token does not indicate context. Usually they are utilized by the semantic tokens. </p><h3>Semantic Tokens</h3><p> Semantic tokens define content and their names indicate where they are utilized, a well known example of a semantic token is the <i>primary.color</i>. Semantic tokens map to primitive tokens or other semantic tokens. The <i>colorScheme</i> token group is a special variable to define tokens based on the color scheme active in the application, this allows defining different tokens based on the color scheme like dark mode. </p><h3>Component Tokens</h3><p> Component tokens are isolated tokens per component such as <i>inputtext.background</i> or <i>button.color</i> that map to the semantic tokens. As an example, <i>button.background</i> component token maps to the <i>primary.color</i> semantic token which maps to the <i>green.500</i> primitive token. </p><h3>Best Practices</h3><p> Use primitive tokens when defining the core color palette and semantic tokens to specify the common design elements such as focus ring, primary colors and surfaces. Components tokens should only be used when customizing a specific component. By defining your own design tokens as a custom preset, you'll be able to define your own style without touching CSS. Overriding the PrimeVue components using style classes is not a best practice and should be the last resort, design tokens are the suggested approach. </p><h3>Video Tutorial</h3><p>Watch the <b>PrimeVue Theming Demystified</b> series to learn more about the architecture with examples.</p><div class="video-container"><iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/videoseries?si=nlVVyxrwgiJCL9U7&amp;list=PLC9bp-OHi-Wm2LqlXk1i-haW-1kESMIqh" width="560"></iframe></div><!--]--></div><!--]--></section><section class="py-6"><!--[--><div id="configuration"><!--[--><h2 class="doc-section-label">Configuration API <!-- --></h2><div class="doc-section-description"><!--[--><!--]--></div><!--]--></div><!--[--><!--[--><!--[--><h3 class="doc-section-label">Theme <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#theme" id="theme"> # </a></h3><div class="doc-section-description"><!--[--><p>The <i>theme</i> property is used to customize the initial theme.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import PrimeVue from 'primevue/config';
+import Aura from '@primeuix/themes/aura';
+
+const app = createApp(App);
+
+app.use(PrimeVue, {
+    // Default theme configuration
+    theme: {
+        preset: Aura,
+        options: {
+            prefix: 'p',
+            darkModeSelector: 'system',
+            cssLayer: false
+        }
+    }
+ });
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--[--><h3 class="doc-section-label">Options <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#options" id="options"> # </a></h3><div class="doc-section-description"><!--[--><p>The <i>options</i> property defines the how the CSS would be generated from the design tokens of the preset.</p><h4>prefix</h4><p>The prefix of the CSS variables, defaults to <i>p</i>. For instance, the <i>primary.color</i> design token would be <i>var(--p-primary-color)</i>.</p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+options: {
+    prefix: 'my'
+}
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><h4>darkModeSelector</h4><p> The CSS rule to encapsulate the CSS variables of the dark mode, the default is the <i>system</i> to generate <i>@media (prefers-color-scheme: dark)</i>. If you need to make the dark mode toggleable based on the user selection define a class selector such as <i>.app-dark</i> and toggle this class at the document root. See the dark mode toggle section for an example. </p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+options: {
+    darkModeSelector: '.my-app-dark'
+}
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><h4>cssLayer</h4><p> Defines whether the styles should be defined inside a <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@layer" rel="noopener noreferrer" target="_blank">CSS layer</a> by default or not. A CSS layer would be handy to declare a custom cascade layer for easier customization if necessary. The default is <i>false</i>. </p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+options: {
+    cssLayer: {
+        name: 'primevue',
+        order: 'app-styles, primevue, another-css-library'
+    }
+}
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></div><!--]--><!--]--><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">Presets <!-- --></h2><div class="doc-section-description"><!--[--><p> Aura, Material, Lara and Nora are the available built-in options, created to demonstrate the power of the design-agnostic theming. Aura is PrimeTek's own vision, Material follows Google Material Design v2, Lara is based on Bootstrap and Nora is inspired by enterprise applications. Visit the <a href="https://github.com/primefaces/primeuix/tree/main/packages/themes/src/presets" rel="noopener noreferrer" target="_blank">source code</a> to learn more about the structure of presets. You may use them out of the box with modifications or utilize them as reference in case you need to build your own presets from scratch. </p><!--]--></div><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">Reserved Keys <!-- --></h2><div class="doc-section-description"><!--[--><p> Following keys are reserved in the preset scheme and cannot be used as a token name; <i>primitive</i>, <i>semantic</i>, <i>components</i>, <i>directives</i>, <i>colorscheme</i>, <i>light</i>, <i>dark</i>, <i>common</i>, <i>root</i>, <i>states</i>, and <i>extend</i>. </p><!--]--></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Colors <!-- --></h2><div class="doc-section-description"><!--[--><p>Color palette of a preset is defined by the <i>primitive</i> design token group. You can access colors using CSS variables or the <i>$dt</i> utility.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+// With CSS
+var(--p-blue-500)
+
+// With JS
+$dt('blue.500').value
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><div class="card"><ul class="p-0 m-0 list-none flex sm:flex-col gap-4 flex-wrap sm:flex-nowrap"><!--[--><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">emerald</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-emerald-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-emerald-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-emerald-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-emerald-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-emerald-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-emerald-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-emerald-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-emerald-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-emerald-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-emerald-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-emerald-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">green</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-green-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-green-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-green-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-green-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-green-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-green-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-green-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-green-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-green-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-green-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-green-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">lime</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-lime-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-lime-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-lime-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-lime-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-lime-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-lime-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-lime-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-lime-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-lime-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-lime-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-lime-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">red</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-red-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-red-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-red-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-red-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-red-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-red-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-red-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-red-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-red-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-red-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-red-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">orange</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-orange-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-orange-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-orange-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-orange-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-orange-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-orange-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-orange-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-orange-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-orange-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-orange-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-orange-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">amber</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-amber-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-amber-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-amber-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-amber-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-amber-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-amber-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-amber-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-amber-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-amber-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-amber-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-amber-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">yellow</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-yellow-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-yellow-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-yellow-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-yellow-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-yellow-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-yellow-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-yellow-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-yellow-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-yellow-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-yellow-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-yellow-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">teal</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-teal-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-teal-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-teal-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-teal-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-teal-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-teal-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-teal-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-teal-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-teal-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-teal-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-teal-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">cyan</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-cyan-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-cyan-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-cyan-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-cyan-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-cyan-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-cyan-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-cyan-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-cyan-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-cyan-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-cyan-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-cyan-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">sky</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-sky-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-sky-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-sky-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-sky-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-sky-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-sky-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-sky-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-sky-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-sky-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-sky-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-sky-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">blue</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-blue-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-blue-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-blue-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-blue-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-blue-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-blue-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-blue-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-blue-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-blue-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-blue-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-blue-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">indigo</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-indigo-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-indigo-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-indigo-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-indigo-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-indigo-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-indigo-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-indigo-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-indigo-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-indigo-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-indigo-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-indigo-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">violet</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-violet-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-violet-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-violet-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-violet-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-violet-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-violet-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-violet-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-violet-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-violet-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-violet-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-violet-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">purple</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-purple-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-purple-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-purple-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-purple-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-purple-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-purple-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-purple-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-purple-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-purple-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-purple-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-purple-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">fuchsia</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-fuchsia-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-fuchsia-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-fuchsia-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-fuchsia-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-fuchsia-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-fuchsia-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-fuchsia-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-fuchsia-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-fuchsia-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-fuchsia-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-fuchsia-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">pink</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-pink-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-pink-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-pink-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-pink-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-pink-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-pink-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-pink-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-pink-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-pink-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-pink-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-pink-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">rose</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-rose-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-rose-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-rose-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-rose-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-rose-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-rose-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-rose-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-rose-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-rose-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-rose-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-rose-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">slate</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-slate-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-slate-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-slate-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-slate-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-slate-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-slate-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-slate-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-slate-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-slate-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-slate-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-slate-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">gray</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-gray-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-gray-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-gray-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-gray-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-gray-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-gray-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-gray-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-gray-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-gray-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-gray-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-gray-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">zinc</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-zinc-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-zinc-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-zinc-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-zinc-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-zinc-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-zinc-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-zinc-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-zinc-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-zinc-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-zinc-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-zinc-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">neutral</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-neutral-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-neutral-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-neutral-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-neutral-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-neutral-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-neutral-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-neutral-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-neutral-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-neutral-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-neutral-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-neutral-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><li class="flex-auto" style="min-width:6rem;"><span class="font-medium capitalize block mb-2 text-center sm:text-left">stone</span><div class="flex gap-4 flex-auto flex-col sm:flex-row"><!--[--><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-stone-50)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">50</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-stone-100)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">100</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-stone-200)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">200</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-stone-300)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">300</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-stone-400)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">400</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-stone-500)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">500</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-stone-600)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">600</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-stone-700)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">700</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-stone-800)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">800</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-stone-900)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">900</span></div><div class="flex flex-col items-center gap-1 flex-1"><div class="rounded h-8 w-full" style="background-color: var(--p-stone-950)"></div><span class="text-sm text-surface-500 dark:text-surface-400 font-medium">950</span></div><!--]--></div></li><!--]--></ul></div><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">Dark Mode <!-- --></h2><div class="doc-section-description"><!--[--><p> PrimeVue uses the <i>system</i> as the default <i>darkModeSelector</i> in theme configuration. If you have a dark mode switch in your application, set the <i>darkModeSelector</i> to the selector you utilize such as <i>.my-app-dark</i> so that PrimeVue can fit in seamlessly with your color scheme. </p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import PrimeVue from 'primevue/config';
+import Aura from '@primeuix/themes/aura';
+
+const app = createApp(App);
+
+app.use(PrimeVue, {
+    // Default theme configuration
+    theme: {
+        preset: Aura,
+        options: {
+            darkModeSelector: '.my-app-dark',
+        }
+    }
+ });
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><p> Following is a very basic example implementation of a dark mode switch, you may extend it further by involving <i>prefers-color-scheme</i> to retrieve it from the system initially and use <i>localStorage</i> to make it stateful. See this <a href="https://dev.to/abbeyperini/dark-mode-toggle-and-prefers-color-scheme-4f3m" rel="noopener noreferrer" target="_blank">article</a> for more information. </p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;Button label="Toggle Dark Mode" @click="toggleDarkMode()" /&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+function toggleDarkMode() {
+    document.documentElement.classList.toggle('my-app-dark');
+}
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><p>In case you prefer to use dark mode all the time, apply the <i>darkModeSelector</i> initially and never change it.</p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;html class="my-app-dark"&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><p>It is also possible to disable dark mode completely using <i>false</i> or <i>none</i> as the value of the selector.</p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+theme: {
+    preset: Aura,
+    options: {
+        darkModeSelector: false || 'none',
+    }
+}
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></div><!--]--></section><section class="py-6"><!--[--><div id="customization"><!--[--><h2 class="doc-section-label">Customization <!-- --></h2><div class="doc-section-description"><!--[--><!--]--></div><!--]--></div><!--[--><!--[--><!--[--><h3 class="doc-section-label">definePreset <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#definepreset" id="definepreset"> # </a></h3><div class="doc-section-description"><!--[--><p>The <i>definePreset</i> utility is used to customize an existing preset during the PrimeVue setup. The first parameter is the preset to customize and the second is the design tokens to override.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import PrimeVue from 'primevue/config';
+import { definePreset } from '@primeuix/themes';
+import Aura from '@primeuix/themes/aura';
+
+const MyPreset = definePreset(Aura, {
+    //Your customizations, see the following sections for examples
+});
+
+app.use(PrimeVue, {
+    theme: {
+        preset: MyPreset
+    }
+ });
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--[--><!--[--><h3 class="doc-section-label">Primary <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#primary" id="primary"> # </a></h3><div class="doc-section-description"><!--[--><p>The <i>primary</i> defines the main color palette, default value maps to the <i>emerald</i> primitive token. Let's setup to use <i>indigo</i> instead.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+const MyPreset = definePreset(Aura, {
+    semantic: {
+        primary: {
+            50: '{indigo.50}',
+            100: '{indigo.100}',
+            200: '{indigo.200}',
+            300: '{indigo.300}',
+            400: '{indigo.400}',
+            500: '{indigo.500}',
+            600: '{indigo.600}',
+            700: '{indigo.700}',
+            800: '{indigo.800}',
+            900: '{indigo.900}',
+            950: '{indigo.950}'
+        }
+    }
+});
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--[--><!--[--><h3 class="doc-section-label">Surface <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#surface" id="surface"> # </a></h3><div class="doc-section-description"><!--[--><p> The color scheme palette that varies between light and dark modes is specified with the surface tokens. Example below uses <i>zinc</i> for light mode and <i>slategray</i> for dark mode. With this setting, light mode, would have a grayscale tone and dark mode would include bluish tone. </p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+const MyPreset = definePreset(Aura, {
+    semantic: {
+        colorScheme: {
+            light: {
+                surface: {
+                    0: '#ffffff',
+                    50: '{zinc.50}',
+                    100: '{zinc.100}',
+                    200: '{zinc.200}',
+                    300: '{zinc.300}',
+                    400: '{zinc.400}',
+                    500: '{zinc.500}',
+                    600: '{zinc.600}',
+                    700: '{zinc.700}',
+                    800: '{zinc.800}',
+                    900: '{zinc.900}',
+                    950: '{zinc.950}'
+                }
+            },
+            dark: {
+                surface: {
+                    0: '#ffffff',
+                    50: '{slate.50}',
+                    100: '{slate.100}',
+                    200: '{slate.200}',
+                    300: '{slate.300}',
+                    400: '{slate.400}',
+                    500: '{slate.500}',
+                    600: '{slate.600}',
+                    700: '{slate.700}',
+                    800: '{slate.800}',
+                    900: '{slate.900}',
+                    950: '{slate.950}'
+                }
+            }
+        }
+    }
+});
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--[--><!--[--><h3 class="doc-section-label">Noir <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#noir" id="noir"> # </a></h3><div class="doc-section-description"><!--[--><p> The <i>noir</i> mode is the nickname of a variant that uses surface tones as the primary and requires and additional <i>colorScheme</i> configuration to implement. A sample preset configuration with black and white variants as the primary color; </p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+const Noir = definePreset(Aura, {
+    semantic: {
+        primary: {
+            50: '{zinc.50}',
+            100: '{zinc.100}',
+            200: '{zinc.200}',
+            300: '{zinc.300}',
+            400: '{zinc.400}',
+            500: '{zinc.500}',
+            600: '{zinc.600}',
+            700: '{zinc.700}',
+            800: '{zinc.800}',
+            900: '{zinc.900}',
+            950: '{zinc.950}'
+        },
+        colorScheme: {
+            light: {
+                primary: {
+                    color: '{zinc.950}',
+                    inverseColor: '#ffffff',
+                    hoverColor: '{zinc.900}',
+                    activeColor: '{zinc.800}'
+                },
+                highlight: {
+                    background: '{zinc.950}',
+                    focusBackground: '{zinc.700}',
+                    color: '#ffffff',
+                    focusColor: '#ffffff'
+                }
+            },
+            dark: {
+                primary: {
+                    color: '{zinc.50}',
+                    inverseColor: '{zinc.950}',
+                    hoverColor: '{zinc.100}',
+                    activeColor: '{zinc.200}'
+                },
+                highlight: {
+                    background: 'rgba(250, 250, 250, .16)',
+                    focusBackground: 'rgba(250, 250, 250, .24)',
+                    color: 'rgba(255,255,255,.87)',
+                    focusColor: 'rgba(255,255,255,.87)'
+                }
+            }
+        }
+    }
+});
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--[--><h3 class="doc-section-label">Font <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#font" id="font"> # </a></h3><div class="doc-section-description"><!--[--><p>There is no design for fonts as UI components inherit their font settings from the application.</p><!--]--></div><!--]--><!--[--><!--[--><h3 class="doc-section-label">Forms <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#forms" id="forms"> # </a></h3><div class="doc-section-description"><!--[--><p> The design tokens of the form input components are derived from the <i>form.field</i> token group. This customization example changes border color to primary on hover. Any component that depends on this semantic token such as <i>dropdown.hover.border.color</i> and <i>textarea.hover.border.color</i> would receive the change. </p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+const MyPreset = definePreset(Aura, {
+    semantic: {
+        colorScheme: {
+            light: {
+                formField: {
+                    hoverBorderColor: '{primary.color}'
+                }
+            },
+            dark: {
+                formField: {
+                    hoverBorderColor: '{primary.color}'
+                }
+            }
+        }
+    }
+});
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--[--><!--[--><h3 class="doc-section-label">Focus Ring <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#focusring" id="focusring"> # </a></h3><div class="doc-section-description"><!--[--><p>Focus ring defines the outline width, style, color and offset. Let's use a thicker ring with the primary color for the outline.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+const MyPreset = definePreset(Aura, {
+    semantic: {
+        focusRing: {
+            width: '2px',
+            style: 'dashed',
+            color: '{primary.color}',
+            offset: '1px'
+        }
+    }
+});
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--[--><!--[--><h3 class="doc-section-label">Component <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#component" id="component"> # </a></h3><div class="doc-section-description"><!--[--><p> The design tokens of a specific component is defined at <i>components</i> layer. Overriding components tokens is not the recommended approach if you are building your own style, building your own preset should be preferred instead. This configuration is global and applies to all card components, in case you need to customize a particular component on a page locally, view the Scoped CSS section for an example. </p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+const MyPreset = definePreset(Aura, {
+    components: {
+        card: {
+            colorScheme: {
+                light: {
+                    root: {
+                        background: '{surface.0}',
+                        color: '{surface.700}'
+                    },
+                    subtitle: {
+                        color: '{surface.500}'
+                    }
+                },
+                dark: {
+                    root: {
+                        background: '{surface.900}',
+                        color: '{surface.0}'
+                    },
+                    subtitle: {
+                        color: '{surface.400}'
+                    }
+                }
+            }
+        }
+    }
+});
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--[--><!--[--><h3 class="doc-section-label">Extend <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#extend" id="extend"> # </a></h3><div class="doc-section-description"><!--[--><p> The theming system can be extended by adding custom design tokens and additional styles. This feature provides a high degree of customization, allowing you to adjust styles according to your needs, as you are not limited to the default tokens. </p><p>The example preset configuration adds a new <i>accent</i> button with custom <i>button.accent.color</i> and <i>button.accent.inverse.color</i> tokens. It is also possible to add tokens globally to share them within the components.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+const MyPreset = definePreset(Aura, {
+    components: {
+        // custom button tokens and additional style
+        button: {
+            extend: {
+                accent: {
+                    color: '#f59e0b',
+                    inverseColor: '#ffffff'
+                }
+            }
+        css: ({ dt }) =&gt; `
+.p-button-accent {
+    background: ${dt('button.accent.color')};
+    color: ${dt('button.accent.inverse.color')};
+    transition-duration: ${dt('my.transition.fast')};
+}
+`
+        }
+    },
+    // common tokens and styles
+    extend: {
+        my: {
+            transition: {
+                slow: '0.75s'
+                normal: '0.5s'
+                fast: '0.25s'
+            },
+            imageDisplay: 'block' 
+        }
+    },
+    css: ({ dt }) =&gt; `
+        /* Global CSS */
+        img {
+            display: ${dt('my.image.display')};
+        }
+    `
+});
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--]--><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Scoped Tokens <!-- --></h2><div class="doc-section-description"><!--[--><p>Design tokens can be scoped to a certain component using the <i>dt</i> property. In this example, first switch uses the global tokens whereas second one overrides the global with its own tokens.</p><p>This approach is recommended over the <i>:deep()</i> as it offers a cleaner API while avoiding the hassle of CSS rule overrides.</p><!--]--></div><!--]--><div class="card flex justify-center gap-4"><div class="p-toggleswitch p-component p-toggleswitch-checked" data-p="checked" data-p-checked="true" data-p-disabled="false" data-pc-name="toggleswitch" data-pc-section="root" pc0_9="" style="position:relative;"><input aria-checked="true" checked="" class="p-toggleswitch-input" data-pc-section="input" role="switch" style="" type="checkbox"/><div class="p-toggleswitch-slider" data-p="checked" data-pc-section="slider"><div class="p-toggleswitch-handle" data-p="checked" data-pc-section="handle"><!--[--><!--]--></div></div></div><div class="p-toggleswitch p-component p-toggleswitch-checked" data-p="checked" data-p-checked="true" data-p-disabled="false" data-pc-name="toggleswitch" data-pc-section="root" pc0_10="" style="position:relative;"><input aria-checked="true" checked="" class="p-toggleswitch-input" data-pc-section="input" role="switch" style="" type="checkbox"/><div class="p-toggleswitch-slider" data-p="checked" data-pc-section="slider"><div class="p-toggleswitch-handle" data-p="checked" data-pc-section="handle"><!--[--><!--]--></div></div></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;template&gt;
+    &lt;div&gt;
+        &lt;ToggleSwitch v-model="checked1" /&gt;
+        &lt;ToggleSwitch v-model="checked2" :dt="amberSwitch" /&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref } from 'vue';
+
+const checked1 = ref(true);
+const checked2 = ref(true);
+const amberSwitch = ref({
+    handle: {
+        borderRadius: '4px'
+    },
+    colorScheme: {
+        light: {
+            root: {
+                checkedBackground: '{amber.500}',
+                checkedHoverBackground: '{amber.600}',
+                borderRadius: '4px'
+            },
+            handle: {
+                checkedBackground: '{amber.50}',
+                checkedHoverBackground: '{amber.100}'
+            }
+        },
+        dark: {
+            root: {
+                checkedBackground: '{amber.400}',
+                checkedHoverBackground: '{amber.300}',
+                borderRadius: '4px'
+            },
+            handle: {
+                checkedBackground: '{amber.900}',
+                checkedHoverBackground: '{amber.800}'
+            }
+        }
+    }
+});
+&lt;/script&gt;
+
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><div id="utils"><!--[--><h2 class="doc-section-label">Utils <!-- --></h2><div class="doc-section-description"><!--[--><!--]--></div><!--]--></div><!--[--><!--[--><!--[--><h3 class="doc-section-label">usePreset <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#usepreset" id="usepreset"> # </a></h3><div class="doc-section-description"><!--[--><p>Replaces the current presets entirely, common use case is changing the preset dynamically at runtime.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { usePreset } from '@primeuix/themes';
+
+const onButtonClick() {
+    usePreset(MyPreset);
+}
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--[--><!--[--><h3 class="doc-section-label">updatePreset <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#updatepreset" id="updatepreset"> # </a></h3><div class="doc-section-description"><!--[--><p>Merges the provided tokens to the current preset, an example would be changing the primary color palette dynamically.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { updatePreset } from '@primeuix/themes';
+
+const changePrimaryColor() {
+    updatePreset({
+        semantic: {
+            primary: {
+                50: '{indigo.50}',
+                100: '{indigo.100}',
+                200: '{indigo.200}',
+                300: '{indigo.300}',
+                400: '{indigo.400}',
+                500: '{indigo.500}',
+                600: '{indigo.600}',
+                700: '{indigo.700}',
+                800: '{indigo.800}',
+                900: '{indigo.900}',
+                950: '{indigo.950}'
+            }
+        }
+    })
+}
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--[--><!--[--><h3 class="doc-section-label">updatePrimaryPalette <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#updateprimarypalette" id="updateprimarypalette"> # </a></h3><div class="doc-section-description"><!--[--><p>Updates the primary colors, this is a shorthand to do the same update using <i>updatePreset</i>.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { updatePrimaryPalette } from '@primeuix/themes';
+
+const changePrimaryColor() {
+    updatePrimaryPalette({
+        50: '{indigo.50}',
+        100: '{indigo.100}',
+        200: '{indigo.200}',
+        300: '{indigo.300}',
+        400: '{indigo.400}',
+        500: '{indigo.500}',
+        600: '{indigo.600}',
+        700: '{indigo.700}',
+        800: '{indigo.800}',
+        900: '{indigo.900}',
+        950: '{indigo.950}'
+    });
+}
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--[--><!--[--><h3 class="doc-section-label">updateSurfacePalette <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#updatesurfacepalette" id="updatesurfacepalette"> # </a></h3><div class="doc-section-description"><!--[--><p>Updates the surface colors, this is a shorthand to do the same update using <i>updatePreset</i>.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { updateSurfacePalette } from '@primeuix/themes';
+
+const changeSurfaces() {
+    //changes surfaces both in light and dark mode
+    updateSurfacePalette({
+        50: '{zinc.50}',
+        // ...
+        950: '{zinc.950}'
+    });
+}
+
+const changeLightSurfaces() {
+    //changes surfaces only in light
+    updateSurfacePalette({
+        light: {
+            50: '{zinc.50}',
+            // ...
+            950: '{zinc.950}'
+        }
+    });
+}
+
+const changeDarkSurfaces() {
+    //changes surfaces only in dark mode
+    updateSurfacePalette({
+        dark: {
+            50: '{zinc.50}',
+            // ...
+            950: '{zinc.950}'
+        }
+    });
+}
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--[--><!--[--><h3 class="doc-section-label">$dt <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#dt" id="dt"> # </a></h3><div class="doc-section-description"><!--[--><p>The <i>$dt</i> function returns the information about a token like the full path and value. This would be useful if you need to access tokens programmatically.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { $dt } from '@primeuix/themes';
+
+const duration = $dt('transition.duration');
+/*
+    duration: {
+        name: '--transition-duration',
+        variable: 'var(--p-transition-duration)',
+        value: '0.2s'
+    }
+*/
+
+const primaryColor = $dt('primary.color');
+/*
+    primaryColor: {
+        name: '--primary-color',
+        variable: 'var(--p-primary-color)',
+        value: {
+        light: {
+            value: '#10b981',
+            paths: {
+                name: 'semantic.primary.color',
+                binding: {
+                    name: 'primitive.emerald.500'
+                }
+            }
+        },
+        dark: {
+            value: '#34d399',
+            paths: {
+                name: 'semantic.primary.color',
+                binding: {
+                    name: 'primitive.emerald.400'
+                }
+            }
+        }
+    }
+}
+*/
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--[--><!--[--><h3 class="doc-section-label">palette <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#Palette" id="Palette"> # </a></h3><div class="doc-section-description"><!--[--><p>Returns shades and tints of a given color from 50 to 950 as an object.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { palette } from '@primeuix/themes';
+
+// custom color
+const values1 = palette('#10b981');
+
+// copy an existing token set
+const primaryColor = palette('{blue}');
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--><!--]--><!--]--></section><section class="py-6"><!--[--><div id="csslayer"><!--[--><h2 class="doc-section-label">CSS Layer <!-- --></h2><div class="doc-section-description"><!--[--><p>The PrimeVue CSS layer only applies to styled mode when layering is enabled explicitly at theme configuration, in unstyled mode the built-in CSS classes are not included and as a result no layer is necessary.</p><!--]--></div><!--]--></div><!--[--><!--[--><h3 class="doc-section-label">Specificity <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#specificity" id="specificity"> # </a></h3><div class="doc-section-description"><!--[--><p> The <i>@layer</i> is a standard CSS feature to define cascade layers for a customizable order of precedence. If you need to become more familiar with layers, visit the documentation at <a class="doc-link" href="https://developer.mozilla.org/en-US/docs/Web/CSS/@layer">MDN</a> to begin with. </p><p> The <i>cssLayer</i> is disabled by default, when it is enabled at theme configuration, PrimeVue wraps the built-in style classes under the <i>primevue</i> cascade layer to make the library styles easy to override. CSS in your app without a layer has the highest CSS specificity, so you'll be able to override styles regardless of the location or how strong a class is written. </p><p>Layers also make it easier to use CSS Modules, view the CSS Modules guide for examples.</p><!--]--></div><!--]--><!--[--><h3 class="doc-section-label">Reset <!-- --><a aria-current="page" class="router-link-active router-link-exact-active" href="https://primevue.org/theming/styled/#reset" id="reset"> # </a></h3><div class="doc-section-description"><!--[--><p> In case PrimeVue components have visual issues in your application, a Reset CSS may be the culprit. CSS layers would be an efficient solution that involves enabling the PrimeVue layer, wrapping the Reset CSS in another layer and defining the layer order. This way, your Reset CSS does not get in the way of PrimeVue components. </p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+/* Order */
+@layer reset, primevue;
+
+/* Reset CSS */
+@layer reset {
+    button,
+    input {
+        /* CSS to Reset */
+    }
+}
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></div><!--]--><!--]--><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">CSS Modules <!-- --></h2><div class="doc-section-description"><!--[--><p><a href="https://github.com/css-modules/css-modules">CSS modules</a> are supported by enabling the <i>module</i> property on a style element within your SFC. Use the <i>$style</i> keyword to apply classes to a PrimeVue component. It is recommend to enable <i>cssLayer</i> when using CSS modules so that the PrimeVue styles have low CSS specificity. </p><div class="card flex justify-center"><input class="p-inputtext p-component _myinput_1f48w_2" data-p="" data-pc-name="inputtext" data-pc-section="root" pc0_11="" placeholder="Search" type="text"/></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+&lt;style module&gt;
+.myinput {
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    border-width: 2px;
+}
+&lt;/style&gt;
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;template&gt;
+    &lt;InputText :class="$style.myinput" placeholder="Search" /&gt;
+&lt;/template&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Scale <!-- --></h2><div class="doc-section-description"><!--[--><p> PrimeVue UI component use <i>rem</i> units, 1rem equals to the font size of the <i>html</i> element which is <i>16px</i> by default. Use the root font-size to adjust the size of the components globally. This website uses <i>14px</i> as the base so it may differ from your application if your base font size is different. </p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+html {
+    font-size: 14px;
+}
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></section><!--]--></div>

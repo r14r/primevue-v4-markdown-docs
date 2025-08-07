@@ -1,0 +1,1 @@
+<Select placeholder="Loading..." loading class="w-full md:w-56" />

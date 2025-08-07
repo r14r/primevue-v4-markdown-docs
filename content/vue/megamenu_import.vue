@@ -1,0 +1,1 @@
+import MegaMenu from 'primevue/megamenu';

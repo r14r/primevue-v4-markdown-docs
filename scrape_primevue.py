@@ -1,4 +1,6 @@
 import os
+import sys
+
 import argparse
 import time
 import requests
@@ -7,6 +9,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from bs4 import BeautifulSoup
 from markdownify import markdownify
 from urllib.parse import urljoin, urlparse
+import hashlib
 
 # --- Configuration ---
 SIDEBAR_SELECTOR = 'aside.layout-sidebar'
@@ -17,23 +20,49 @@ REQUEST_DELAY_SECONDS = 1 # Delay between requests to be polite to the server
 HEADERS = { # Pretend to be a browser
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 }
+
+FLDR_CACHE = "cache"
+FLDR_CONTENT = "content"
+
 # --- End Configuration ---
 
 def get_page_html(url):
-    """Fetches HTML content from a URL with error handling and delay."""
+    """Fetches HTML content from a URL with error handling, delay, and caching."""
+
+    # Ensure cache directory exists
+    cache_dir = FLDR_CACHE
+    os.makedirs(cache_dir, exist_ok=True)
+
+    # Create a filename based on the URL hash
+
+    name_from_url = url.split('/')[-2]
+
+    cache_file = os.path.join(cache_dir, f"{name_from_url}.html")
+
+    # Try to load from cache first
+    if os.path.exists(cache_file):
+        print(f"  Loading from cache: {cache_file}")
+        with open(cache_file, "r", encoding="utf-8") as f:
+            return f.read(), name_from_url
+
     print(f"  Fetching: {url}")
     try:
-        verify=False # Disable SSL verification for simplicity
+        verify = False  # Disable SSL verification for simplicity
         response = requests.get(url, headers=HEADERS, timeout=15)
-        response.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
+        response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
         print(f"  Status: {response.status_code}")
+
+        # Save to cache
+        with open(cache_file, "w", encoding="utf-8") as f:
+            f.write(response.text)
         # Introduce delay *after* a successful request
         time.sleep(REQUEST_DELAY_SECONDS)
-        return response.text
+        return response.text, name_from_url
+    
     except requests.exceptions.RequestException as e:
         print(f"  Error fetching {url}: {e}")
-        time.sleep(REQUEST_DELAY_SECONDS) # Still delay even on error
-        return None
+        time.sleep(REQUEST_DELAY_SECONDS)  # Still delay even on error
+        return None, None
 
 def extract_links_from_sidebar(sidebar_html, base_url):
     """Extracts absolute URLs from anchor tags within the sidebar HTML."""
@@ -60,6 +89,50 @@ def extract_links_from_sidebar(sidebar_html, base_url):
         print(f"  Error extracting links from sidebar: {e}")
     return sorted(list(links)) # Return a sorted list
 
+def extract_title_from_header(header: str) -> str:
+    """
+    Extracts the title from a header string.
+    """
+    if header:
+        # Remove all <a> tags
+        for a in header.find_all('a'):
+            a.decompose()
+        title = header.get_text(strip=True)
+
+    title = str(title).strip()
+
+    return title.replace(" ", "_").replace("-", "_").replace("/", "_")
+
+def extract_code_from_section(section):
+    """
+    Given a <section> BeautifulSoup element, extract:
+      - The section title from the <h2> header (text only, strip whitespace)
+      - All code segments (as strings) from <pre><code>...</code></pre> blocks inside the section
+    Returns: (title, [code1, code2, ...])
+    """
+    title = None
+    codes = []
+
+    if not section:
+        return codes
+    
+    # Find all <h2> tags with class 'doc-section-label' in the section
+    for h2 in section.find_all('h2', class_='doc-section-label'):
+        # Extract the title from the h2
+        title = extract_title_from_header(h2)
+
+        # Find all <pre> tags after this h2 until the next h2
+        for sibling in h2.find_next_siblings():
+            if sibling.name == 'h2' and 'doc-section-label' in sibling.get('class', []):
+                break
+            for pre in sibling.find_all('pre'):
+                code = pre.get_text()
+                if code:
+                    codes.append({"title": title, "code": code.strip('\n')})
+
+    return codes
+
+
 def extract_and_convert(html_content, is_first_file, base_url):
     """
     Extracts sidebar (if first file) and main content from HTML content,
@@ -67,13 +140,13 @@ def extract_and_convert(html_content, is_first_file, base_url):
     Tries different selectors for main content.
     """
     if not html_content:
-        return None, None
+        return None, None, None
 
     try:
         soup = BeautifulSoup(html_content, 'lxml')
     except Exception as e:
         print(f"  Error parsing HTML: {e}")
-        return None, None
+        return None, None, None
 
     sidebar_md = None
     content_md = None
@@ -130,7 +203,7 @@ def extract_and_convert(html_content, is_first_file, base_url):
         # If neither selector worked
         print(f"  -> Main content element not found using selectors: 'div.doc-main' or 'div.doc'.")
 
-    return sidebar_md, content_md
+    return sidebar_md, content_md, content_el if content_el else None
 
 def main():
     parser = argparse.ArgumentParser(description="Scrape PrimeVue HTML documentation and convert to a single Markdown file.")
@@ -149,7 +222,7 @@ def main():
 
     # 1. Fetch the starting page to get the sidebar links
     print("Fetching starting page to extract navigation links...")
-    initial_html = get_page_html(start_url)
+    initial_html, _ = get_page_html(start_url)
     if not initial_html:
         print("Failed to fetch the starting page. Exiting.")
         return
@@ -174,18 +247,47 @@ def main():
     # 3. Iterate through URLs, fetch content, convert
     for i, url in enumerate(page_urls):
         print(f"\nProcessing URL {i+1}/{len(page_urls)}: {url}")
-        current_html = get_page_html(url)
+        current_html, name_from_url = get_page_html(url)
 
         if current_html:
             # Pass the base_url for link conversion
-            sidebar, content = extract_and_convert(current_html, is_first, base_url)
+            sidebar, content_md, content_el = extract_and_convert(current_html, is_first, base_url)
+            codes = extract_code_from_section(content_el)
 
             if is_first and sidebar:
                 final_sidebar_md = sidebar
                 is_first = False # Sidebar only from the very first page processed
 
-            if content:
-                all_content_md.append(content)
+            if content_md:
+                all_content_md.append(content_md)
+
+                # Save the content to a file in content/{name_from_url}
+                os.makedirs(f"{FLDR_CONTENT}", exist_ok=True)
+
+                
+                os.makedirs(f"{FLDR_CONTENT}/md", exist_ok=True)
+                content_file = os.path.join(f"{FLDR_CONTENT}/md", f"{name_from_url}.md")
+
+                with open(content_file, "w", encoding="utf-8") as cf:
+                    cf.write(content_md)
+
+                os.makedirs(f"{FLDR_CONTENT}/html", exist_ok=True)
+                content_file = os.path.join(f"{FLDR_CONTENT}/html", f"{name_from_url}.html")
+
+                with open(content_file, "w", encoding="utf-8") as cf:
+                    cf.write(str(content_el))
+
+                os.makedirs(f"{FLDR_CONTENT}/vue", exist_ok=True)
+                for c in codes:
+                    code_title = c['title'].lower()
+                    code_content = c['code']
+
+                    code_file = os.path.join(f"{FLDR_CONTENT}/vue", f"{name_from_url}_{code_title}.vue")
+
+                    with open(code_file, "w", encoding="utf-8") as cf:
+                        cf.write(code_content)
+
+                print(f"  -> Content saved to {content_file}")
             else:
                 print(f"  -> Warning: No main content extracted from '{url}'.")
         else:

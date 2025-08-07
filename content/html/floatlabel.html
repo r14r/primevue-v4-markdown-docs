@@ -1,0 +1,37 @@
+<div class="doc-main"><div class="doc-intro"><h1>FloatLabel</h1><p>FloatLabel visually integrates a label with its form element.</p></div><!--[--><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Import <!-- --></h2><div class="doc-section-description"><!--[--><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import FloatLabel from 'primevue/floatlabel';
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Basic <!-- --></h2><div class="doc-section-description"><!--[--><p>FloatLabel is used by wrapping the input and its label.</p><!--]--></div><!--]--><div class="card flex justify-center"><span class="p-floatlabel p-floatlabel-over" data-pc-name="floatlabel" data-pc-section="root" pc0_9=""><!--[--><input autocomplete="off" class="p-inputtext p-component" data-p="" data-pc-name="inputtext" data-pc-section="root" id="username" pc0_10="" type="text"/><label for="username">Username</label><!--]--></span></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;FloatLabel&gt;
+    &lt;InputText id="username" v-model="value" /&gt;
+    &lt;label for="username"&gt;Username&lt;/label&gt;
+&lt;/FloatLabel&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Variants <!-- --></h2><div class="doc-section-description"><!--[--><p>The <i>variant</i> property defines the position of the label. Default value is <i>over</i>, whereas <i>in</i> and <i>on</i> are the alternatives.</p><!--]--></div><!--]--><div class="card flex flex-wrap justify-center items-end gap-4"><span class="p-floatlabel p-floatlabel-in" data-pc-name="floatlabel" data-pc-section="root" pc0_11=""><!--[--><input autocomplete="off" class="p-inputtext p-component" data-p="" data-pc-name="inputtext" data-pc-section="root" id="in_label" pc0_12="" type="text"/><label for="in_label">In Label</label><!--]--></span><span class="p-floatlabel p-floatlabel-on" data-pc-name="floatlabel" data-pc-section="root" pc0_13=""><!--[--><input autocomplete="off" class="p-inputtext p-component" data-p="" data-pc-name="inputtext" data-pc-section="root" id="on_label" pc0_14="" type="text"/><label for="on_label">On Label</label><!--]--></span></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;FloatLabel variant="in"&gt;
+    &lt;InputText id="in_label" v-model="value1" autocomplete="off" /&gt;
+    &lt;label for="in_label"&gt;In Label&lt;/label&gt;
+&lt;/FloatLabel&gt;
+
+&lt;FloatLabel variant="on"&gt;
+    &lt;InputText id="on_label" v-model="value2" autocomplete="off" /&gt;
+    &lt;label for="on_label"&gt;On Label&lt;/label&gt;
+&lt;/FloatLabel&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Invalid <!-- --></h2><div class="doc-section-description"><!--[--><p>When the form element is invalid, the label is also highlighted.</p><!--]--></div><!--]--><div class="card flex flex-wrap justify-center items-end gap-4"><span class="p-floatlabel p-floatlabel-over" data-pc-name="floatlabel" data-pc-section="root" pc0_15=""><!--[--><input aria-invalid="true" autocomplete="off" class="p-inputtext p-component p-invalid" data-p="invalid" data-pc-name="inputtext" data-pc-section="root" id="value1" pc0_16="" type="text"/><label for="value1">Username</label><!--]--></span><span class="p-floatlabel p-floatlabel-in" data-pc-name="floatlabel" data-pc-section="root" pc0_17=""><!--[--><input aria-invalid="true" autocomplete="off" class="p-inputtext p-component p-invalid" data-p="invalid" data-pc-name="inputtext" data-pc-section="root" id="value2" pc0_18="" type="text"/><label for="value2">Username</label><!--]--></span><span class="p-floatlabel p-floatlabel-on" data-pc-name="floatlabel" data-pc-section="root" pc0_19=""><!--[--><input aria-invalid="true" autocomplete="off" class="p-inputtext p-component p-invalid" data-p="invalid" data-pc-name="inputtext" data-pc-section="root" id="value3" pc0_20="" type="text"/><label for="value3">Username</label><!--]--></span></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;FloatLabel&gt;
+    &lt;InputText id="value1" v-model="value1" :invalid="!value1" /&gt;
+    &lt;label for="value1"&gt;Username&lt;/label&gt;
+&lt;/FloatLabel&gt;
+
+&lt;FloatLabel variant="in"&gt;
+    &lt;InputText id="value2" v-model="value2" :invalid="!value2" /&gt;
+    &lt;label for="value2"&gt;Username&lt;/label&gt;
+&lt;/FloatLabel&gt;
+
+&lt;FloatLabel variant="on"&gt;
+    &lt;InputText id="value3" v-model="value3" :invalid="!value3" /&gt;
+    &lt;label for="value3"&gt;Username&lt;/label&gt;
+&lt;/FloatLabel&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">Accessibility <!-- --></h2><div class="doc-section-description"><!--[--><h3>Screen Reader</h3><p>FloatLabel does not require any roles and attributes.</p><h3>Keyboard Support</h3><p>Component does not include any interactive elements.</p><!--]--></div><!--]--></section><!--]--></div>

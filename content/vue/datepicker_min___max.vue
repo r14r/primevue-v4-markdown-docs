@@ -1,0 +1,1 @@
+<DatePicker v-model="date" :minDate="minDate" :maxDate="maxDate" :manualInput="false" />

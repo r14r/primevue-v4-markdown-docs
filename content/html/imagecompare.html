@@ -1,0 +1,34 @@
+<div class="doc-main"><div class="doc-intro"><h1>ImageCompare</h1><p>Compare two images side by side with a slider.</p></div><!--[--><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Import <!-- --></h2><div class="doc-section-description"><!--[--><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import ImageCompare from 'primevue/imagecompare';
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Basic <!-- --></h2><div class="doc-section-description"><!--[--><p>Images are defined using templating with <i>left</i> and <i>right</i> slots. Use the <i>style</i> or <i>class</i> properties to define the size of the container.</p><!--]--></div><!--]--><div class="card flex justify-center"><div class="p-imagecompare shadow-lg rounded-2xl shadow-lg rounded-2xl" data-pc-name="imagecompare" data-pc-section="root" pc0_9=""><!--[--><img src="https://primefaces.org/cdn/primevue/images/compare/island1.jpg"/><!--]--><!--[--><img src="https://primefaces.org/cdn/primevue/images/compare/island2.jpg"/><!--]--><input class="p-imagecompare-slider" data-pc-section="slider" max="100" min="0" type="range" value="50"/></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;ImageCompare class="shadow-lg rounded-2xl"&gt;
+    &lt;template #left&gt;
+        &lt;img src="~/assets/images/island1.jpg" /&gt;
+    &lt;/template&gt;
+    &lt;template #right&gt;
+        &lt;img src="~/assets/images/island2.jpg" /&gt;
+    &lt;/template&gt;
+&lt;/ImageCompare&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Responsive <!-- --></h2><div class="doc-section-description"><!--[--><p>Apply responsive styles to the container element to optimize display per screen size.</p><!--]--></div><!--]--><div class="card flex justify-center"><div class="p-imagecompare sm:!w-96 shadow-lg rounded-2xl sm:!w-96 shadow-lg rounded-2xl" data-pc-name="imagecompare" data-pc-section="root" pc0_10=""><!--[--><img src="https://primefaces.org/cdn/primevue/images/compare/island1.jpg"/><!--]--><!--[--><img src="https://primefaces.org/cdn/primevue/images/compare/island2.jpg"/><!--]--><input class="p-imagecompare-slider" data-pc-section="slider" max="100" min="0" type="range" value="50"/></div></div><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-code"></i></button><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><svg fill="currentColor" height="18" role="img" style="display:'block';" viewbox="0 0 13 19" width="13" xmlns="http://www.w3.org/2000/svg"><path d="M0 10.6533H5.43896L2.26866 18.1733L12.6667 7.463H7.1986L10.3399 0L0 10.6533Z"></path></svg></button><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;ImageCompare class="sm:!w-96 shadow-lg rounded-2xl"&gt;
+    &lt;template #left&gt;
+        &lt;img src="~/assets/images/island1.jpg" /&gt;
+    &lt;/template&gt;
+    &lt;template #right&gt;
+        &lt;img src="~/assets/images/island2.jpg" /&gt;
+    &lt;/template&gt;
+&lt;/ImageCompare&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">Accessibility <!-- --></h2><div class="doc-section-description"><!--[--><h3>Screen Reader</h3><p>ImageComponent component uses a native range <i>slider</i> internally. Value to describe the component can be defined using <i>aria-labelledby</i> and <i>aria-label</i> props.</p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><!-- --><pre><code>
+&lt;span id="image_label"&gt;Compare Images&lt;/span&gt;
+&lt;ImageCompare class="shadow-lg rounded-2xl" aria-labelledby="image-label"&gt;
+    ...
+&lt;/ImageCompare&gt;
+
+&lt;ImageCompare class="shadow-lg rounded-2xl" aria-label="Compare Images"&gt;
+    ...
+&lt;/ImageCompare&gt;
+
+</code></pre><!-- --><!-- --><!-- --></div></div><h3>Keyboard Support</h3><div class="doc-tablewrapper"><table class="doc-table"><thead><tr><th>Key</th><th>Function</th></tr></thead><tbody><tr><td><i>tab</i></td><td>Moves focus to the component.</td></tr><tr><td><span class="inline-flex flex-col"><i class="mb-1">left arrow</i><i>up arrow</i></span></td><td>Decrements the value.</td></tr><tr><td><span class="inline-flex flex-col"><i class="mb-1">right arrow</i><i>down arrow</i></span></td><td>Increments the value.</td></tr><tr><td><i>home</i></td><td>Set the minimum value.</td></tr><tr><td><i>end</i></td><td>Set the maximum value.</td></tr><tr><td><i>page up</i></td><td>Increments the value by 10 steps.</td></tr><tr><td><i>page down</i></td><td>Decrements the value by 10 steps.</td></tr></tbody></table></div><!--]--></div><!--]--></section><!--]--></div>

@@ -1,0 +1,1 @@
+import PanelMenu from 'primevue/panelmenu';

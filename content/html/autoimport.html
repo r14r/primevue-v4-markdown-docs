@@ -1,0 +1,43 @@
+<div class="doc-main"><div class="doc-intro"><h1>Auto Import</h1><p>On-demand PrimeVue components with auto imports and tree-shaking.</p></div><!--[--><section class="py-6"><!--[--><!--[--><h2 class="doc-section-label">Overview <!-- --></h2><div class="doc-section-description"><!--[--><p>PrimeVue components need to be imported and configured individually. In the next section, we'll cleanup the code using auto imports.</p><!--]--></div><!--]--><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { createApp } from "vue";
+import PrimeVue from "primevue/config";
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import App from './App.vue'
+const app = createApp(App);
+
+app.use(PrimeVue);
+app.component('InputText', InputText);
+app.component('Button', Button);
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">Unplugin <!-- --></h2><div class="doc-section-description"><!--[--><p> The <a href="https://github.com/unplugin/unplugin-vue-components" rel="noopener noreferrer" target="_blank">unplugin-vue-components</a> library can automatically import and register PrimeVue components with the help of <i>@primevue/auto-import-resolver</i>. Begin with installing the packages as dev dependencies. </p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+npm i unplugin-vue-components -D
+npm i @primevue/auto-import-resolver -D
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><p>Next step would be adding the <i>PrimeVueResolver</i> at vite.config using the <i>Components</i> plugin.</p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import Components from 'unplugin-vue-components/vite';
+import {PrimeVueResolver} from '@primevue/auto-import-resolver';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+    Components({
+      resolvers: [
+        PrimeVueResolver()
+      ]
+    })
+  ]
+})
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><p> That's it, now the initialization code can be refactored as the following. For configuration like namespacing, visit the <a href="https://github.com/unplugin/unplugin-vue-components?tab=readme-ov-file#configuration" rel="noopener noreferrer" target="_blank">official documentation</a>. </p><div class="doc-section-code"><div class="doc-section-code-buttons animate-scalein animate-duration-300"><!-- --><!-- --><!-- --><!-- --><button class="h-8 w-8 p-0 inline-flex items-center justify-center" type="button"><i class="pi pi-copy"></i></button></div><div dir="ltr"><pre><code>
+import { createApp } from "vue";
+import PrimeVue from "primevue/config";
+import App from './App.vue'
+const app = createApp(App);
+
+app.use(PrimeVue);
+
+</code></pre><!-- --><!-- --><!-- --><!-- --></div></div><!--]--></div><!--]--></section><section class="py-6"><!--[--><h2 class="doc-section-label">Example <!-- --></h2><div class="doc-section-description"><!--[--><p>A complete example using PrimeVue with auto imports is available at the <a class="" href="https://primevue.org/playground">playground</a>.</p><!--]--></div><!--]--></section><!--]--></div>
