@@ -1,1 +1,0 @@
-<Slider v-model="value" :step="20" class="w-56" />

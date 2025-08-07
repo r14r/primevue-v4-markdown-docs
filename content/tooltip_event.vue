@@ -1,1 +1,0 @@
-<InputText v-tooltip.focus.top="'Enter your username'" type="text" placeholder="Focus" />

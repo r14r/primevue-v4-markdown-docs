@@ -1,1 +1,0 @@
-import DeferredContent from 'primevue/deferredcontent';

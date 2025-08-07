@@ -1,1 +1,0 @@
-import Dock from 'primevue/dock';

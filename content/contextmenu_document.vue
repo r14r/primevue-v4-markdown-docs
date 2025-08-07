@@ -1,1 +1,0 @@
-<ContextMenu global :model="items" />

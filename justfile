@@ -12,8 +12,7 @@ install-requirements:
 install-pyproject:
 	uv pip install -r pyproject.toml
 	
-serve:
-	streamlit run app.py
 
-run: serve
+run: 
+	python scrape_primevue.py https://primevue.org/introduction/ primevue_v4_docs_latest.md
 

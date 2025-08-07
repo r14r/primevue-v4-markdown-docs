@@ -1,1 +1,0 @@
-<Slider v-model="value" orientation="vertical" class="h-56" />

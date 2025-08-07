@@ -1,1 +1,0 @@
-<AutoComplete v-model="value" dropdown :suggestions="items" @complete="search" />

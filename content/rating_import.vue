@@ -1,1 +1,0 @@
-import Rating from 'primevue/rating';

@@ -1,1 +1,0 @@
-<Editor v-model="value" editorStyle="height: 320px" readonly />

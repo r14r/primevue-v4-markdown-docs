@@ -1,1 +1,0 @@
-<Password v-model="value" :feedback="false" variant="filled" />

@@ -1,1 +1,0 @@
-<SplitButton label="Save" @click="save" :model="items" disabled />

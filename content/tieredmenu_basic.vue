@@ -1,1 +1,0 @@
-<TieredMenu :model="items" />

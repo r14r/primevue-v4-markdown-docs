@@ -1,1 +1,0 @@
-import ImageCompare from 'primevue/imagecompare';

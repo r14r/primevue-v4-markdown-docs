@@ -1,2 +1,0 @@
-<Paginator :rows="10" :totalRecords="120" template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" />

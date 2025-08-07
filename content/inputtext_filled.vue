@@ -1,1 +1,0 @@
-<InputText type="text" v-model="value" variant="filled" />

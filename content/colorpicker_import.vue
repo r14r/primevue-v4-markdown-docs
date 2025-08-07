@@ -1,1 +1,0 @@
-import ColorPicker from 'primevue/colorpicker';

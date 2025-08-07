@@ -1,1 +1,0 @@
-<CascadeSelect loading placeholder="Loading..." class="w-56" />

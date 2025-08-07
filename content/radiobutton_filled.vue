@@ -1,1 +1,0 @@
-<RadioButton v-model="value" value="1" variant="filled" />

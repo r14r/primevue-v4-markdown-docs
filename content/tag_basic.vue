@@ -1,1 +1,0 @@
-<Tag value="New"></Tag>

@@ -1,1 +1,0 @@
-import VirtualScroller from 'primevue/virtualscroller';

@@ -1,1 +1,0 @@
-<Button v-tooltip="{ value: 'Confirm to proceed', showDelay: 1000, hideDelay: 300 }" label="Save" />

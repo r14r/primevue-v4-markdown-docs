@@ -1,2 +1,0 @@
-<Menubar :model="items" />
-<Toast />

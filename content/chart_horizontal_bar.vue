@@ -1,1 +1,0 @@
-<Chart type="bar" :data="chartData" :options="chartOptions" class="h-[30rem]"  />

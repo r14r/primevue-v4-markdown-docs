@@ -1,1 +1,0 @@
-<DatePicker v-model="dates" selectionMode="multiple" :manualInput="false" />

@@ -1,1 +1,0 @@
-<DatePicker v-model="date" variant="filled" />

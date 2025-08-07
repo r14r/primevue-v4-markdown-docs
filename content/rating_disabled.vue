@@ -1,1 +1,0 @@
-<Rating v-model="value" disabled />

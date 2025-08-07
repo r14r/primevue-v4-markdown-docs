@@ -1,1 +1,0 @@
-import Knob from 'primevue/knob';

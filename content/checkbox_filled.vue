@@ -1,1 +1,0 @@
-<Checkbox v-model="checked" binary variant="filled" />

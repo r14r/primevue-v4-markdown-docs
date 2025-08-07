@@ -1,1 +1,0 @@
-<Message closable>Closable Message</Message>

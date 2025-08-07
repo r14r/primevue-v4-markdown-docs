@@ -1,2 +1,0 @@
-<PanelMenu :model="items" />
-<Toast />

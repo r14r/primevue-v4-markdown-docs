@@ -1,1 +1,0 @@
-<DatePicker v-model="date" view="year" dateFormat="yy" />

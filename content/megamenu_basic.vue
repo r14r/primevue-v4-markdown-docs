@@ -1,1 +1,0 @@
-<MegaMenu :model="items" />

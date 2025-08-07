@@ -1,1 +1,0 @@
-import OrganizationChart from 'primevue/organizationchart';

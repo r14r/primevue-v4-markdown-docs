@@ -1,1 +1,0 @@
-import IftaLabel from 'primevue/iftalabel';

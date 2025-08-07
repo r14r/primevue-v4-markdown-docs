@@ -1,1 +1,0 @@
-<Menubar :model="items" />

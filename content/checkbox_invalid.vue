@@ -1,1 +1,0 @@
-<Checkbox v-model="checked" :invalid="!checked"  binary />

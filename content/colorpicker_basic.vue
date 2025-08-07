@@ -1,1 +1,0 @@
-<ColorPicker v-model="color" />

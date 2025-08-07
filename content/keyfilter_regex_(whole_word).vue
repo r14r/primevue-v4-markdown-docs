@@ -1,1 +1,0 @@
-<InputText v-model="text" v-keyfilter="{ pattern: /^[+]?(d{1,12})?$/, validateOnly: true }" />

@@ -1,1 +1,0 @@
-<DatePicker v-model="date" inline showWeek class="w-full sm:w-[30rem]" />

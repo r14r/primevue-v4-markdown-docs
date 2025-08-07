@@ -1,1 +1,0 @@
-<Knob v-model="value5" :step="10" />

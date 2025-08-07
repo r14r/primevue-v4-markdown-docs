@@ -1,1 +1,0 @@
-<InputOtp v-model="value" mask />

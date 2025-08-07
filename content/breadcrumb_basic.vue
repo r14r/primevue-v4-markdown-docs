@@ -1,1 +1,0 @@
-<Breadcrumb :home="home" :model="items" />

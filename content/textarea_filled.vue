@@ -1,1 +1,0 @@
-<Textarea v-model="value" variant="filled" rows="5" cols="30" />

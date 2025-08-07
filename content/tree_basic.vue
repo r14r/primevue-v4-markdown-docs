@@ -1,1 +1,0 @@
-<Tree :value="nodes" class="w-full md:w-[30rem]"></Tree>

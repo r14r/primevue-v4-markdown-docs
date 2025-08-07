@@ -1,1 +1,0 @@
-<MeterGroup :value="value" />

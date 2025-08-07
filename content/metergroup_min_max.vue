@@ -1,1 +1,0 @@
-<MeterGroup :value="value" :max="200"  />

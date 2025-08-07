@@ -1,1 +1,0 @@
-<ProgressBar :value="value"></ProgressBar>
